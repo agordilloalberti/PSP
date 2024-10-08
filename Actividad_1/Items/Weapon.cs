@@ -5,9 +5,16 @@ namespace Actividad_1.Items
     public abstract class Weapon : Item
     {
         private double damage;
-        public void apply(Character c)
+
+        public virtual void apply(Character c)
         {
-            c.equipWeapon(damage);
+            c.equipWeapon(this);
+        }
+
+        public virtual double GetDamage()
+        {
+            return damage;
         }
     }
+    
 }

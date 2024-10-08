@@ -6,9 +6,19 @@ namespace Actividad_1.Items
     {
         private double armor;
         private double health;
-        public void apply(Character c)
+        public virtual void apply(Character c)
         {
-            c.equipProtection(armor,health);
+            c.equipProtection(this);
+        }
+
+        public virtual double getArmor()
+        {
+            return armor;
+        }
+
+        public virtual double getHealth()
+        {
+            return health;
         }
     }
 }

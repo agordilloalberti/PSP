@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Actividad_1.Items;
 
 namespace Actividad_1.Entities
 {
@@ -14,7 +16,8 @@ namespace Actividad_1.Entities
         private double actualDamage;
         private double actualArmor;
         private bool defending = false;
-        private List<Item> inventory;
+        private List<Item> inventory=new List<Item>();
+        private List<Pet> pets=new List<Pet>();
 
         public Character(string name, double maxHealth, double baseDamage, double baseArmor)
         {
@@ -39,7 +42,14 @@ namespace Actividad_1.Entities
         public Character(string name, double maxHealth, double baseDamage, double baseArmor, List<Item> items)
         {
             this.name = name;
-            this.maxHealth = maxHealth;
+            if (maxHealth <= 0)
+            {
+                this.maxHealth = 1;
+            }
+            else
+            {
+                this.maxHealth = maxHealth;
+            }
             this.currentHealth = maxHealth;
             this.baseDamage = baseDamage;
             this.baseArmor = baseArmor;
@@ -49,7 +59,52 @@ namespace Actividad_1.Entities
             foreach (var item in inventory)
             {
                 item.apply(this);
+                heal(Double.MaxValue);
             }
+        }
+        
+        public Character(string name, double maxHealth, double baseDamage, double baseArmor, List<Item> items, List<Pet> pets)
+        {
+            this.name = name;
+            if (maxHealth <= 0)
+            {
+                this.maxHealth = 1;
+            }
+            else
+            {
+                this.maxHealth = maxHealth;
+            }
+            this.currentHealth = maxHealth;
+            this.baseDamage = baseDamage;
+            this.baseArmor = baseArmor;
+            this.actualArmor = this.baseArmor;
+            this.actualDamage = this.baseDamage;
+            this.inventory = items;
+            this.pets = pets;
+            foreach (var item in inventory)
+            {
+                item.apply(this);
+                heal(Double.MaxValue);
+            }
+        }
+        
+        public Character(string name, double maxHealth, double baseDamage, double baseArmor, List<Pet> pets)
+        {
+            this.name = name;
+            if (maxHealth <= 0)
+            {
+                this.maxHealth = 1;
+            }
+            else
+            {
+                this.maxHealth = maxHealth;
+            }
+            this.currentHealth = maxHealth;
+            this.baseDamage = baseDamage;
+            this.baseArmor = baseArmor;
+            this.actualArmor = this.baseArmor;
+            this.actualDamage = this.baseDamage;
+            this.pets = pets;
         }
 
         
@@ -63,6 +118,14 @@ namespace Actividad_1.Entities
             if (c != this && !c.dead)
             {
                 String s = c.recieveDamage(actualDamage);
+                if (pets.Count>0)
+                {
+                    Console.WriteLine("sup?");
+                    foreach (var pet in pets)
+                    {
+                        s += "\n"+pet.attack(c);
+                    }
+                }
                 return this.name + " ataca por " + actualDamage + " daño a "+ c.name+"\n"+ s;
             }
 
@@ -128,29 +191,54 @@ namespace Actividad_1.Entities
                     return this.name + " ha recibido " + damage + " de daño, lo que lo deja fuera de combate";
                 }
 
-                return this.name + " ha recibido " + damage + " de daño";
+                return this.name + " ha recibido " + damage + " de daño y se queda con "+this.currentHealth+" de salud";
             }
-            else
+            return this.name + " esta fuera de combate";
+        }
+
+        public void equipWeapon(Weapon w)
+        {
+            this.actualDamage += w.GetDamage();
+        }
+
+        public void equipProtection(Protection p)
+        {
+            this.actualArmor += p.getArmor();
+            this.maxHealth += p.getHealth();
+        }
+
+        public void addWeapon(Weapon w)
+        {
+            inventory.Add(w);
+            equipWeapon(w);
+        }
+        
+        public void addProtection(Protection p)
+        {
+            inventory.Add(p);
+            equipProtection(p);
+        }
+
+        public void removeProtection(Protection p)
+        {
+            inventory.Remove(p);
+            this.maxHealth -= p.getHealth();
+            this.actualArmor -= p.getArmor();
+            if (currentHealth < maxHealth)
             {
-                return this.name + " esta fuera de combate";
+                this.currentHealth = maxHealth;
             }
         }
 
-        public void equipWeapon(double damage)
+        public void removeWeapon(Weapon w)
         {
-            this.actualDamage += damage;
-        }
-
-        public void equipProtection(double armor, double health)
-        {
-            this.actualArmor += armor;
-            this.maxHealth += health;
-            this.currentHealth = this.maxHealth;
+            inventory.Remove(w);
+            this.actualDamage -= w.GetDamage();
         }
 
         public override string ToString()
         {
-            return "El personaje "+name+" tiene un total de "+maxHealth+" vida máxima " + baseArmor+ " armadura base "
+            return "El personaje "+name+" tiene un total de "+maxHealth+" vida máxima, " + baseArmor+ " armadura base, "
                    + baseDamage +" daño base, la armadura y daño actuales son "+ actualArmor +" y " + actualDamage;
         }
     }

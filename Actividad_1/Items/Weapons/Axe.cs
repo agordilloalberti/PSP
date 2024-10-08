@@ -5,9 +5,13 @@ namespace Actividad_1.Items.Weapons
     public class Axe : Weapon
     {
         private double damage = 5;
-        public void apply(Character c)
+        public override void apply(Character c)
         {
-            c.equipWeapon(damage);
+            c.equipWeapon(this);
+        }
+        public override double GetDamage()
+        {
+            return damage;
         }
     }
 }

@@ -2,13 +2,23 @@
 
 namespace Actividad_1.Items.Protections
 {
-    public class Helmet
+    public class Helmet : Protection
     {
-        private double armor = 5;
-        private double health = 5;
-        public void apply(Character c)
+        public double armor = 5;
+        public double health = 5;
+        public override void apply(Character c)
         {
-            c.equipProtection(armor,health);
+            c.equipProtection(this);
+        }
+        
+        public override double getArmor()
+        {
+            return armor;
+        }
+
+        public override double getHealth()
+        {
+            return health;
         }
     }
 }
