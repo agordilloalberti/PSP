@@ -6,6 +6,7 @@ namespace Actividad_1.Entities
     public class Character
     {
         private String name;
+        private bool dead = false;
         private double maxHealth;
         private double currentHealth;
         private double baseDamage;
@@ -18,10 +19,21 @@ namespace Actividad_1.Entities
         public Character(string name, double maxHealth, double baseDamage, double baseArmor)
         {
             this.name = name;
-            this.maxHealth = maxHealth;
+            
+            if (maxHealth <= 0)
+            {
+                this.maxHealth = 1;
+            }
+            else
+            {
+                this.maxHealth = maxHealth;
+            }
+            
             this.currentHealth = this.maxHealth;
             this.baseDamage = baseDamage;
             this.baseArmor = baseArmor;
+            this.actualArmor = this.baseArmor;
+            this.actualDamage = this.baseDamage;
         }
         
         public Character(string name, double maxHealth, double baseDamage, double baseArmor, List<Item> items)
@@ -31,7 +43,13 @@ namespace Actividad_1.Entities
             this.currentHealth = maxHealth;
             this.baseDamage = baseDamage;
             this.baseArmor = baseArmor;
+            this.actualArmor = this.baseArmor;
+            this.actualDamage = this.baseDamage;
             this.inventory = items;
+            foreach (var item in inventory)
+            {
+                item.apply(this);
+            }
         }
 
         
@@ -40,9 +58,15 @@ namespace Actividad_1.Entities
             currentHealth = health;
         }
 
-        public double attack()
+        public String attack(Character c)
         {
-            return actualDamage;
+            if (c != this && !c.dead)
+            {
+                String s = c.recieveDamage(actualDamage);
+                return this.name + " ataca por " + actualDamage + " daño a "+ c.name+"\n"+ s;
+            }
+
+            return "No puedes atacar a este personaje";
         }
 
         private bool toggleDefense()
@@ -77,25 +101,39 @@ namespace Actividad_1.Entities
             }
         }
 
-        public double recieveDamage(double damage)
+        public String recieveDamage(double damage)
         {
-            if (defending)
+            if (!dead)
             {
-                damage -= actualArmor * 1.5;
-                toggleDefense();
+                if (defending)
+                {
+                    damage -= actualArmor * 1.5;
+                    toggleDefense();
+                }
+                else
+                {
+                    damage -= actualArmor;
+                }
+
+                if (damage <= 0)
+                {
+                    return "El daño ha sido completamente negado";
+                }
+
+                currentHealth -= damage;
+
+                if (currentHealth <= 0)
+                {
+                    this.dead = true;
+                    return this.name + " ha recibido " + damage + " de daño, lo que lo deja fuera de combate";
+                }
+
+                return this.name + " ha recibido " + damage + " de daño";
             }
             else
             {
-                damage -= actualArmor;
+                return this.name + " esta fuera de combate";
             }
-
-            if (damage<=0)
-            {
-                return currentHealth;
-            }
-            
-            currentHealth -= damage;
-            return currentHealth;
         }
 
         public void equipWeapon(double damage)
@@ -108,6 +146,12 @@ namespace Actividad_1.Entities
             this.actualArmor += armor;
             this.maxHealth += health;
             this.currentHealth = this.maxHealth;
+        }
+
+        public override string ToString()
+        {
+            return "El personaje "+name+" tiene un total de "+maxHealth+" vida máxima " + baseArmor+ " armadura base "
+                   + baseDamage +" daño base, la armadura y daño actuales son "+ actualArmor +" y " + actualDamage;
         }
     }
 }
