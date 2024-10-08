@@ -1,7 +1,14 @@
-﻿namespace Actividad_1.Items
+﻿using Actividad_1.Entities;
+
+namespace Actividad_1.Items
 {
-    public class Protection
+    public abstract class Protection : Item
     {
-        
+        private double armor;
+        private double health;
+        public void apply(Character c)
+        {
+            c.equipProtection(armor,health);
+        }
     }
 }
