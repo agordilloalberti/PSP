@@ -40,6 +40,15 @@
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Entities\Character.cs" />
+        <Compile Include="Entities\Pets.cs" />
+        <Compile Include="Item.cs" />
+        <Compile Include="Items\Protection.cs" />
+        <Compile Include="Items\Protections\Helmet.cs" />
+        <Compile Include="Items\Protections\Shield.cs" />
+        <Compile Include="Items\Weapon.cs" />
+        <Compile Include="Items\Weapons\Axe.cs" />
+        <Compile Include="Items\Weapons\Sword.cs" />
         <Compile Include="Program.cs"/>
         <Compile Include="Properties\AssemblyInfo.cs"/>
     </ItemGroup>
