@@ -20,13 +20,9 @@ namespace Actividad_1
             A2.addWeapon(new Sword());
             A2.addProtection(new Helmet());
             A2.heal(5);
-            
-            Console.WriteLine(A1);
-            Console.WriteLine(A2);
-            
-            Console.WriteLine(A1.status());
-            Console.WriteLine(A2.status());
-            
+
+            Console.WriteLine(A1.seeInventory());
+
             // Console.WriteLine(A1.attack(A2));
             // Console.WriteLine(A2.attack(A1));
             // Console.WriteLine(A1.attack(A2));

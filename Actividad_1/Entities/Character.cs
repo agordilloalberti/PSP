@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Actividad_1.Items;
+using Actividad_1.Items.Weapons;
 
 namespace Actividad_1.Entities
 {
@@ -250,6 +251,16 @@ namespace Actividad_1.Entities
         {
             return this.name+" tiene "+this.maxHealth+" de vida máxima, "+this.currentHealth+" de vida actual, "
                    +this.actualDamage+" de daño y "+this.actualArmor+" de armadura";
+        }
+
+        public String seeInventory()
+        {
+            string s="";
+            foreach (var item in inventory)
+            {
+                //TODO: completar seeInvetory
+            }
+            return s;
         }
 
         public override string ToString()
