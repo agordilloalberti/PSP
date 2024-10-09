@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Actividad_1.Items;
 
 namespace Actividad_1.Entities
@@ -8,14 +7,14 @@ namespace Actividad_1.Entities
     public class Character
     {
         private String name;
-        private bool dead = false;
+        private bool dead;
         private double maxHealth;
         private double currentHealth;
         private double baseDamage;
         private double baseArmor;
         private double actualDamage;
         private double actualArmor;
-        private bool defending = false;
+        private bool defending;
         private List<Item> inventory=new List<Item>();
         private List<Pet> pets=new List<Pet>();
 
@@ -113,6 +112,8 @@ namespace Actividad_1.Entities
             currentHealth = health;
         }
 
+        public string getName => name;
+
         public String attack(Character c)
         {
             if (c != this && !c.dead)
@@ -120,7 +121,6 @@ namespace Actividad_1.Entities
                 String s = c.recieveDamage(actualDamage);
                 if (pets.Count>0)
                 {
-                    Console.WriteLine("sup?");
                     foreach (var pet in pets)
                     {
                         s += "\n"+pet.attack(c);
@@ -180,7 +180,7 @@ namespace Actividad_1.Entities
 
                 if (damage <= 0)
                 {
-                    return "El daño ha sido completamente negado";
+                    return this.name+" ha repelido el ataque";
                 }
 
                 currentHealth -= damage;
@@ -234,6 +234,22 @@ namespace Actividad_1.Entities
         {
             inventory.Remove(w);
             this.actualDamage -= w.GetDamage();
+        }
+
+        public void addPet(Pet p)
+        {
+            pets.Add(p);
+        }
+
+        public void removePet(Pet p)
+        {
+            pets.Remove(p);
+        }
+
+        public String status()
+        {
+            return this.name+" tiene "+this.maxHealth+" de vida máxima, "+this.currentHealth+" de vida actual, "
+                   +this.actualDamage+" de daño y "+this.actualArmor+" de armadura";
         }
 
         public override string ToString()

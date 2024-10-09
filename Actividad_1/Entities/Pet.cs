@@ -14,7 +14,7 @@ namespace Actividad_1.Entities
         private double damage;
         public String attack(Character c)
         {
-            return this.name+" ataca por "+this.damage+"\n"+c.recieveDamage(damage);
+            return this.name+" ataca a "+c.getName+ " por "+this.damage+" de daño\n"+c.recieveDamage(damage);
         }
     }
 }

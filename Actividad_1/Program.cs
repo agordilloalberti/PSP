@@ -10,24 +10,27 @@ namespace Actividad_1
     {
         public static void Main(string[] args)
         {
-            List<Item> items = new List<Item>();
-            items.Add(new Axe());
-            items.Add(new Shield());
+            Character A1 = new Character("Juan",10.0,5.0,0.0);
+            Character A2 = new Character("Pepe", 10.0, 5.0, 0.0);
             
-            List<Item> items2 = new List<Item>();
-            items2.Add(new Sword());
-            items2.Add(new Helmet());
+            A1.addWeapon(new Axe());
+            A1.addProtection(new Shield());
+            A1.addPet(new Pet("Lukos",10));
             
-            List<Pet>pets = new List<Pet>();
-            pets.Add(new Pet("Lukos",5));
-            
-            Character A1 = new Character("Juan",10.0,5.0,0.0,items,pets);
-            Character A2 = new Character("Pepe", 10.0, 5.0, 0.0, items2);
+            A2.addWeapon(new Sword());
+            A2.addProtection(new Helmet());
+            A2.heal(5);
             
             Console.WriteLine(A1);
             Console.WriteLine(A2);
             
-            Console.WriteLine(A1.attack(A2));
+            Console.WriteLine(A1.status());
+            Console.WriteLine(A2.status());
+            
+            // Console.WriteLine(A1.attack(A2));
+            // Console.WriteLine(A2.attack(A1));
+            // Console.WriteLine(A1.attack(A2));
+            // Console.WriteLine(A2.attack(A1));
 
         }
     }
