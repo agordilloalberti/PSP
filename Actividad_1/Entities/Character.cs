@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Actividad_1.Items;
-using Actividad_1.Items.Weapons;
 
 namespace Actividad_1.Entities
 {

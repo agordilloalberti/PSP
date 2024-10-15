@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Actividad_1.Entities;
 using Actividad_1.Items.Protections;
 using Actividad_1.Items.Weapons;
@@ -15,7 +14,7 @@ namespace Actividad_1
             
             A1.addWeapon(new Axe());
             A1.addProtection(new Shield());
-            A1.addPet(new Pet("Lukos",10));
+            A1.addPet(new Pet("Lukos",10,A1));
             
             A2.addWeapon(new Sword());
             A2.addProtection(new Helmet());
