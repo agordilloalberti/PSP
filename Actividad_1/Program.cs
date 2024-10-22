@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using Actividad_1.Entities;
 
 namespace Actividad_1
 {
     internal class Program
     {
-        private static ArrayList characters = new ArrayList();
+        private static List<Character> characters;
 
         public static void Main(string[] args)
         {
@@ -20,13 +21,13 @@ namespace Actividad_1
                 try
                 {
                     int n =int.Parse(userInput);
-                    if (n>1)
+                    if (n>=2)
                     {
                         break;
                     }
                     Console.WriteLine("Deben haber un minimo de 2 jugadores");
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     Console.WriteLine("El valor debe ser un numero, inserte de nuevo el número de jugadores");
                 }
@@ -43,8 +44,10 @@ namespace Actividad_1
             foreach (var c in characters)
             {
                 char op;
-                Console.WriteLine($"Ahora vamos a equipar al personaje {c.name}, ¿Espada(e) o hacha(h)?");
+                //TODO: arreglar el error con los tipos dentro del array
+                Console.WriteLine($"Ahora vamos a equipar al personaje {c.getName}, ¿Espada(e) o hacha(h)?");
                 op = Console.ReadLine().ToUpper()[0];
+                
                 while (op!='E' || op!='H')
                 {
                     Console.WriteLine("Esa opción no es valida, Espada(e) o hacha()h");
@@ -83,7 +86,7 @@ namespace Actividad_1
                     Console.WriteLine($"{hp} de salud, ¿Es correcto? Y/N");
                     op = Console.ReadLine().ToUpper()[0];
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     Console.WriteLine("Escriba un número por favor\n");
                     op = 'N';
@@ -99,7 +102,7 @@ namespace Actividad_1
                     Console.WriteLine($"{dmg} de daño, ¿Es correcto? Y/N");
                     op = Console.ReadLine().ToUpper()[0];
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     Console.WriteLine("Escriba un número por favor\n");
                     op = 'N';
@@ -115,7 +118,7 @@ namespace Actividad_1
                     Console.WriteLine($"{armor} de armadura, ¿Es correcto? Y/N");
                     op = Console.ReadLine().ToUpper()[0];
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     Console.WriteLine("Escriba un número por favor\n");
                     op = 'N';
